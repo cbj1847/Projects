@@ -1,1 +1,1 @@
-# Personal Project repository
+# Personal project repository
