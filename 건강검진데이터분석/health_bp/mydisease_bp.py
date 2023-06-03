@@ -116,18 +116,22 @@ def disease():
             dnb = '입니다.'
         else:
             dnb = '가 아닙니다.'
-        #트리글리세라이드, hdl, ldl 연령대 평균수치
+        # 트리글리세라이드, hdl, ldl 연령대 평균수치
         tgsval, hdlval, ldlval, tdlval = tg_list[b], hdl_list[b], ldl_list[b], tdl_list[b]
-
+        # 이상지질혈증 유병자 판별
+        if tg >= 200 or hdl < 40 or ldl >= 160 or hdl+ldl >= 240:
+            ejh = '입니다.' 
+        else:
+            ejh = '가 아닙니다.'
 
         if gender == '남성':    
             return render_template('my_disease_res.html', age_list = male, age=str(age), gender=gender, b=b, scg=scg_bp[b], iwg=iwg_bp[b],
                 gha = gha, su_list = subp, iw_list = iwbp, c=c, d=d, e=e, gbhd_list=gbhd, f=f, dnb=dnb, g=g, tgsval=tgsval, hdlval=hdlval, ldlval=ldlval,
-                tdlval=tdlval)
+                tdlval=tdlval, ejh = ejh)
         elif gender == '여성':
             return render_template('my_disease_res.html', age_list = female, age=str(age), gender=gender, b=b, scg=scg_bp[b], iwg=iwg_bp[b],
                 gha = gha, su_list = subp, iw_list = iwbp, c=c, d=d, e=e, gbhd_list=gbhd, f=f, dnb=dnb, g=g, tgsval=tgsval, hdlval=hdlval, ldlval=ldlval,
-                tdlval=tdlval)
+                tdlval=tdlval, ejh = ejh)
 
 # 혈압 비율        
 @health_bp2.route('/disease', methods=['GET', 'POST'])
