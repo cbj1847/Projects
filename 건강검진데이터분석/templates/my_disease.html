@@ -1,0 +1,102 @@
+{% extends 'base.html'%}
+{% block additional_head %}
+<style>
+    th {
+        text-align: center;
+    }
+    button {
+        border-radius: 7%;
+    }
+    input {
+        width:10%; height: 80%;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<div style="padding-left:21%; padding-right:21%">
+<h2 style="margin-top: 20px; font-weight: bolder;">건강 상태 확인하기</h2><hr>
+<form action="/myhealth/disease" method="post">
+<span>주민번호 뒷자리 첫번째까지 입력 (예시: 9912201) : </span><input type="text" name="jm" style="height:80%"><br><hr>
+<div class="row">
+    <div class="col">
+        <span>수축기혈압 : <input type="text" name="bp1"> mmHg</span>
+    </div>
+    <div class="col">
+        <span>이완기혈압 수치 : </span><input type="text" name="bp2"> mmHg
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>공복혈당 수치 : <input type="text" name="bs"> mg/dL</span>
+    </div>
+    <div class="col">
+        <span>트리글리세라이드 수치 : <input type="text" name="tg"> mg/dL</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>HDL콜레스테롤 수치 : <input type="text" name="hdl"> mg/dL</span>
+    </div>
+    <div class="col">
+        <span>LDL콜레스테롤 수치 : <input type="text" name="ldl"> mg/dL</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>혈색소 수치 : <input type="text" name="hg"> g/dL</span>
+    </div>
+    <div class="col">
+        <span>요단백 수치 : <input type="text" name="up"> g/dL</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>혈청크레아티닌 수치 : <input type="text" name="bc"> IU/dL</span>
+    </div>
+    <div class="col">
+        <span>감마GPT 수치 : <input type="text" name="gpt"> IU/dL</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>혈청지오티AST 수치 : <input type="text" name="ast"> IU/dL</span>
+    </div>
+    <div class="col">
+        <span>혈청지오티ALT 수치 : <input type="text" name="alt"> IU/dL</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">흡연여부 : </div>
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="smoke" id="smoker" value="흡연">
+            <label class="form-check-label" for="smoker">흡연</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="smoke" id="nonsmoker" value="비흡연" checked>
+            <label class="form-check-label" for="nonsmoker">비흡연</label>
+        </div>
+    </div>
+    <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;음주여부 : </div>
+    <div class="col">
+        <div class="form-check1">
+            <input class="form-check-input" type="radio" name="drink" value="음주">
+            <label class="form-check-label" for="flexRadioDefault3">음주</label>
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-check1">
+            <input class="form-check-input" type="radio" name="drink" value="비음주" checked>
+            <label class="form-check-label" for="flexRadioDefault4">비음주</label>
+        </div>
+    </div>
+    <div class="col">
+        <div style="text-align: center;"><button type="submit">확인</button></div>
+    </div>
+</div><hr>
+</div>
+</form>
+{% endblock %}

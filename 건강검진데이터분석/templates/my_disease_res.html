@@ -1,0 +1,147 @@
+{% extends 'base.html'%}
+{% block additional_head %}
+<style>
+    th {
+        text-align: center;
+    }
+    button {
+        border-radius: 7%;
+    }
+    input {
+        width:10%
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<div style=" padding-left:10%; padding-right:10%; margin-top: 10px;">
+<h2>Result.</h2><hr>
+
+<!-- 성별 result -->
+<p><span>성별 : {{ gender }} /&nbsp;</span><span> 나이 : {{ age }}세</span></p>
+<p>연령대별 데이터 분포</p>
+<table class="table table-bordered border-dark" style="font-size: 13px;">   
+    <tr>
+        <th>연령대</th>
+        {% for age in age_list %}  
+        <td align="center" class="item0" {% if loop.index == b %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ age.연령 }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>비율</th>
+        {% for age in age_list %}
+        <td align="center" class="item1" {% if loop.index == b %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ age.비율 }}%</td>
+        {% endfor %}
+    </tr>
+</table>
+
+<!-- 혈압 result -->
+<p>uid님 연령대 혈압 데이터 분포</p>
+<table class="table table-bordered border-dark" style="font-size: 13px;">   
+    <tr>
+        <th>수축기 혈압</th>
+        {% for su in su_list %}  
+        <td align="center" class="item0" {% if loop.index == c %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ su.혈압 }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>비율</th>
+        {% for su in su_list %}
+        <td align="center" class="item1" {% if loop.index == c %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ su.비율 }}%</td>
+        {% endfor %}
+    </tr>
+    <tr align="center">
+        <th>고혈압</th>
+        <td colspan="3" {% if 1<= c <= 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+        <td colspan="4" {% if 4<= c <= 7 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
+        <td colspan="3" {% if 8<= c <= 10 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+    </tr>
+</table>
+<table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+    <tr>
+        <th>이완기 혈압</th>
+        {% for iw in iw_list %}  
+        <td align="center" class="item0" {% if loop.index == d %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ iw.혈압 }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>비율</th>
+        {% for iw in iw_list %}
+        <td align="center" class="item1" {% if loop.index == d %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ iw.비율 }}%</td>
+        {% endfor %}
+    </tr>
+    <tr align="center">
+        <th>고혈압</th>
+        <td colspan="3" {% if 1<= d <= 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+        <td colspan="4" {% if 4<= d <= 7 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
+        <td colspan="3" {% if 8<= d <= 10 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+    </tr>
+</table>
+<p><span>uid님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e }}</span> 입니다.</span></p>
+<p><span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
+    <span> 평균 이완기 혈압은 <span style="font-weight: bold;">{{ iwg }}mmHg</span> 입니다.</span></p>
+
+<!-- 공복혈당 result -->
+<table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+    <tr>
+        <th>공복혈당</th>
+        {% for gbhd in gbhd_list %}  
+        <td align="center" class="item0" {% if loop.index == f %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ gbhd.혈당 }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>비율</th>
+        {% for gbhd in gbhd_list %}
+        <td align="center" class="item1" {% if loop.index == f %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ gbhd.비율 }}%</td>
+        {% endfor %}
+    </tr>
+    <tr align="center">
+        <th>당뇨병</th>
+        <td {% if f == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+        <td {% if f == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+        <td {% if f == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+    </tr>
+</table>
+<p><span>uid님 연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며 </span><span>당뇨병 건강연령대는 
+    <span style="font-weight: bold;">{{ g }}</span>이고,</span><span> 당뇨병 유병자{{ dnb }}</span></p>
+
+<!-- 혈압 result -->
+<div class="row">
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+            <tr>
+                <th>트리글리세라이드</th>
+                {% for tg in tg_list %}  
+                <td align="center" class="item0" {% if loop.index == f %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ tg.혈당 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for tg in tg_list %}
+                <td align="center" class="item1" {% if loop.index == f %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ tg.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>당뇨병</th>
+                <td {% if f == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if f == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if f == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+
+    </div>
+ </div>
+
+ <p><span>uid님 연령대 HDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ hdlval }}mg/dL</span>, </span>
+    <span>LDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ ldlval }}mg/dL</span>, </span></p>
+<p><span>트리글리세라이드 평균수치는 <span style="font-weight: bold;">{{ tgsval }}mg/dL</span>, </span>
+    <span>총 콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ tdlval }}mg/dL</span>이며, </span></p>
+<p><span>uid님 총 콜레스테롤 수치는 <span style="font-weight: bold;">{{ tgsval }}mg/dL</span>, </span>
+    <span>총 콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ tdlval }}mg/dL</span>이며, </span></p>
+
+
+<button onclick="location.href='/myhealth/disease'">재실행</button>
+</div>
+{% endblock %}
