@@ -6,7 +6,10 @@ import hashlib, base64, json
 from health_bp.bp_util import su_bp5, su_bp6, su_bp7, su_bp8,su_bp9,su_bp10,su_bp11,su_bp12,su_bp13,su_bp14,su_bp15,su_bp16,su_bp17,su_bp18
 from health_bp.bp_util import iw_bp5, iw_bp6, iw_bp7, iw_bp8,iw_bp9,iw_bp10,iw_bp11,iw_bp12,iw_bp13,iw_bp14,iw_bp15,iw_bp16,iw_bp17,iw_bp18
 from health_bp.bp_util import gbhd5, gbhd6, gbhd7, gbhd8,gbhd9,gbhd10,gbhd11,gbhd12,gbhd13,gbhd14,gbhd15,gbhd16,gbhd17,gbhd18
-from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list
+from health_bp.bp_util import tgdict5, tgdict6, tgdict7, tgdict8,tgdict9,tgdict10,tgdict11,tgdict12,tgdict13,tgdict14,tgdict15,tgdict16,tgdict17,tgdict18
+from health_bp.bp_util import hdldict5, hdldict6, hdldict7, hdldict8,hdldict9,hdldict10,hdldict11,hdldict12,hdldict13,hdldict14,hdldict15,hdldict16,hdldict17,hdldict18
+from health_bp.bp_util import ldldict5, ldldict6, ldldict7, ldldict8,ldldict9,ldldict10,ldldict11,ldldict12,ldldict13,ldldict14,ldldict15,ldldict16,ldldict17,ldldict18
+from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list, male, female
 health_bp2 = Blueprint('health_bp2', __name__)
 
 def age_gen(a) :
@@ -24,16 +27,6 @@ def age_gen(a) :
 # 연령대/성별 비율 출력 
 @health_bp2.route('/disease', methods=['GET', 'POST'])
 def disease():
-    male = [{'연령': '20~24세', '비율': 1.8},{'연령': '25~29세', '비율': 6.63},{'연령': '30~34세', '비율': 9.28},
-            {'연령': '35~39세', '비율': 11.27},{'연령': '40~44세', '비율': 12.63},{'연령': '45~49세', '비율': 11.71},
-            {'연령': '50~54세', '비율': 12.38},{'연령': '55~59세', '비율': 10.51},{'연령': '60~64세', '비율': 9.76},
-            {'연령': '65~69세', '비율': 5.37},{'연령': '70~74세', '비율': 4.71},{'연령': '75~79세', '비율': 2.37},
-            {'연령': '80~84세', '비율': 1.33},{'연령': '85세+', '비율': 0.23}]   
-    female = [{'연령': '20~24세', '비율': 2.53},{'연령': '25~29세', '비율': 6.43},{'연령': '30~34세', '비율': 5.99},
-              {'연령': '35~39세', '비율': 5.75},{'연령': '40~44세', '비율': 11.8},{'연령': '45~49세', '비율': 11.33},
-            {'연령': '50~54세', '비율': 14.05},{'연령': '55~59세', '비율': 11.87},{'연령': '60~64세', '비율': 11.87},
-            {'연령': '65~69세', '비율': 6.37},{'연령': '70~74세', '비율': 6.0},{'연령': '75~79세', '비율': 3.35},
-            {'연령': '80~84세', '비율': 2.12},{'연령': '85세+', '비율': 0.55}]
     if request.method == 'GET':
         return render_template('my_disease.html',)
     else:
@@ -97,6 +90,33 @@ def disease():
                 f = f + 1
         # 고혈압 건강 연령대
         g = male[f-1]['연령']
+        # 트리글리세라이드 컬럼 찾기용
+        h=1
+        tg_1 = [0,  150,  200]
+        tg_2 = [150,  200,  10000]
+        for i, j in zip(tg_1, tg_2):
+            if i <= tg < j:
+                break
+            else:
+                h = h + 1
+        # HDL 컬럼 찾기용
+        i=1
+        hdl_1 = [0,  40,  60]
+        hdl_2 = [40,  60,  10000]
+        for m, n in zip(hdl_1, hdl_2):
+            if m <= hdl < n:
+                break
+            else:
+                i = i + 1        
+        # LDL 컬럼 찾기용
+        j=1
+        ldl_1 = [0,  130,  160]
+        ldl_2 = [130,  160,  10000]
+        for m, n in zip(ldl_1, ldl_2):
+            if m <= ldl < n:
+                break
+            else:
+                j = j + 1           
 
         # 연령대별 수축기/이완기혈압 비율 테이블 찾기
         subp = [su_bp5, su_bp6, su_bp7, su_bp8,su_bp9,su_bp10,su_bp11,su_bp12,su_bp13,su_bp14,su_bp15,su_bp16,su_bp17,su_bp18][b]
@@ -118,20 +138,26 @@ def disease():
             dnb = '가 아닙니다.'
         # 트리글리세라이드, hdl, ldl 연령대 평균수치
         tgsval, hdlval, ldlval, tdlval = tg_list[b], hdl_list[b], ldl_list[b], tdl_list[b]
+        tgs_list = [tgdict5, tgdict6, tgdict7, tgdict8,tgdict9,tgdict10,tgdict11,tgdict12,tgdict13,tgdict14,tgdict15,tgdict16,tgdict17,tgdict18][b]
+        hdldict_list = [hdldict5, hdldict6, hdldict7, hdldict8,hdldict9,hdldict10,hdldict11,hdldict12,hdldict13,hdldict14,hdldict15,hdldict16,hdldict17,hdldict18][b]
+        ldldict_list = [ldldict5, ldldict6, ldldict7, ldldict8,ldldict9,ldldict10,ldldict11,ldldict12,ldldict13,ldldict14,ldldict15,ldldict16,ldldict17,ldldict18][b]
+
         # 이상지질혈증 유병자 판별
         if tg >= 200 or hdl < 40 or ldl >= 160 or hdl+ldl >= 240:
             ejh = '입니다.' 
         else:
             ejh = '가 아닙니다.'
-
+    
         if gender == '남성':    
             return render_template('my_disease_res.html', age_list = male, age=str(age), gender=gender, b=b, scg=scg_bp[b], iwg=iwg_bp[b],
                 gha = gha, su_list = subp, iw_list = iwbp, c=c, d=d, e=e, gbhd_list=gbhd, f=f, dnb=dnb, g=g, tgsval=tgsval, hdlval=hdlval, ldlval=ldlval,
-                tdlval=tdlval, ejh = ejh)
+                tdlval=tdlval, ejh = ejh, tgs_list=tgs_list, h=h, i=i, hdldict_list=hdldict_list, ldldict_list=ldldict_list, j=j,
+                )
         elif gender == '여성':
             return render_template('my_disease_res.html', age_list = female, age=str(age), gender=gender, b=b, scg=scg_bp[b], iwg=iwg_bp[b],
                 gha = gha, su_list = subp, iw_list = iwbp, c=c, d=d, e=e, gbhd_list=gbhd, f=f, dnb=dnb, g=g, tgsval=tgsval, hdlval=hdlval, ldlval=ldlval,
-                tdlval=tdlval, ejh = ejh)
+                tdlval=tdlval, ejh = ejh, tgs_list=tgs_list, h=h, i=i, hdldict_list=hdldict_list,ldldict_list=ldldict_list, j=j,
+                )
 
 # 혈압 비율        
 @health_bp2.route('/disease', methods=['GET', 'POST'])

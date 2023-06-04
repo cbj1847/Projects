@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block main %}
-<div style=" padding-left:10%; padding-right:10%; margin-top: 10px;">
+<div style=" padding-left:7%; padding-right:7%; margin-top: 10px;">
 <h2>Result.</h2><hr>
 
 <!-- 성별 result -->
@@ -105,12 +105,83 @@
 <p><span>uid님 연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며 </span><span>당뇨병 건강연령대는 
     <span style="font-weight: bold;">{{ g }}</span>이고,</span><span> 당뇨병 유병자{{ dnb }}</span></p>
 
-<!-- 혈압 result -->
+<!-- 콜레스테롤 result -->
 <div class="row">
     <div class="col">
         <table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
             <tr>
-                <th>트리글리세라이드</th>
+                <th style="width:auto">트리글리세라이드</th>
+                {% for tgs in tgs_list %}  
+                <td align="center" class="item0" {% if loop.index == h %} style="background-color: lightpink; width: 7%; font-weight: bolder; width:auto"
+                 {% endif %}>{{ tgs.혈압 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for tgs in tgs_list %}
+                <td align="center" class="item1" {% if loop.index == h %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ tgs.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>이상지질혈증</th>
+                <td {% if h == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if h == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if h == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+            <tr>
+                <th style="width:auto">HDL 콜레스테롤</th>
+                {% for hdl in hdldict_list %}  
+                <td align="center" class="item0" {% if loop.index == i %} style="background-color: lightpink; width: 7%;
+                 font-weight: bolder; width:auto" {% endif %}>{{ hdl.혈압 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for hdl in hdldict_list %}
+                <td align="center" class="item1" {% if loop.index == i %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ hdl.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>이상지질혈증</th>
+                <td {% if i == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if i == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if i == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+            <tr>
+                <th style="width:auto" >LDL 콜레스테롤</th>
+                {% for ldl in ldldict_list %}  
+                <td align="center" class="item0" {% if loop.index == j %} style="background-color: lightpink; width: 7%;
+                 font-weight: bolder; width:auto" {% endif %}>{{ ldl.혈압 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for ldl in ldldict_list %}
+                <td align="center" class="item1" {% if loop.index == j %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ ldl.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>이상지질혈증</th>
+                <td {% if j == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if j == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if j == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px; margin-top:15px">   
+            <tr>
+                <th>총 콜레스테롤</th>
                 {% for tg in tg_list %}  
                 <td align="center" class="item0" {% if loop.index == f %} style="background-color: lightpink; width: 7%; font-weight: bolder;" {% endif %}>{{ tg.혈당 }}</td>
                 {% endfor %}
@@ -122,7 +193,7 @@
                 {% endfor %}
             </tr>
             <tr align="center">
-                <th>당뇨병</th>
+                <th>이상지질혈증</th>
                 <td {% if f == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
                 <td {% if f == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
                 <td {% if f == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>

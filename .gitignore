@@ -1,14 +1,10 @@
 # CK Kim add
+dataset/
 openweather.txt
-credits.csv
-upload/
-kakaoapikey.txt
-roadapikey.txt
 password.txt
 test.py
 test.ipynb
-model/
-OpinosisDataset1.0/
+doorlock.py
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
 
