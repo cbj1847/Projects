@@ -80,8 +80,8 @@
         <td colspan="3" {% if 8<= d <= 10 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
     </tr>
 </table>
-<p><span>uid님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e }}</span> 입니다.</span></p>
-<p><span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
+<p><span>uid님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e }}</span> 입니다.</span>
+    <span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
     <span> 평균 이완기 혈압은 <span style="font-weight: bold;">{{ iwg }}mmHg</span> 입니다.</span></p>
 
 <!-- 공복혈당 result -->
@@ -140,21 +140,21 @@
             <tr>
                 <th style="width:auto">HDL 콜레스테롤</th>
                 {% for hdl in hdldict_list %}  
-                <td align="center" class="item0" {% if loop.index == i %} style="background-color: lightpink; width: 7%;
+                <td align="center" class="item0" {% if loop.index == hdlc %} style="background-color: lightpink; width: 7%;
                  font-weight: bolder; width:auto" {% endif %}>{{ hdl.혈압 }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <th>비율</th>
                 {% for hdl in hdldict_list %}
-                <td align="center" class="item1" {% if loop.index == i %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ hdl.비율 }}%</td>
+                <td align="center" class="item1" {% if loop.index == hdlc %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ hdl.비율 }}%</td>
                 {% endfor %}
             </tr>
             <tr align="center">
                 <th>이상지질혈증</th>
-                <td {% if i == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if i == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
-                <td {% if i == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+                <td {% if hdlc == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if hdlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if hdlc == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
     </div>
@@ -165,21 +165,21 @@
             <tr>
                 <th style="width:auto">LDL 콜레스테롤</th>
                 {% for ldl in ldldict_list %}  
-                <td align="center" class="item0" {% if loop.index == j %} style="background-color: lightpink; width: 7%;
+                <td align="center" class="item0" {% if loop.index == ldlc %} style="background-color: lightpink; width: 7%;
                  font-weight: bolder; width:auto" {% endif %}>{{ ldl.혈압 }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <th>비율</th>
                 {% for ldl in ldldict_list %}
-                <td align="center" class="item1" {% if loop.index == j %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ ldl.비율 }}%</td>
+                <td align="center" class="item1" {% if loop.index == ldlc %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ ldl.비율 }}%</td>
                 {% endfor %}
             </tr>
             <tr align="center">
                 <th>이상지질혈증</th>
-                <td {% if j == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if j == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
-                <td {% if j == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+                <td {% if ldlc == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if ldlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if ldlc == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
     </div>
@@ -289,7 +289,80 @@
     </div>
     <p><span>uid님의 연령대 요단백 비정상률은 <span style="font-weight: bold;">{{ ydb_abnormal }}%</span>입니다.</span></p>
 </div>
-
+<!-- 간질환 요소 -->
+ <h5 style="margin-top:30px"><span>AST / ALT / r-GTP수치 분석결과</span></h5>
+<div class="row">
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px;">   
+            <tr>
+                <th style="width:auto">SGOT(AST)</th>
+                {% for ast in ast_list %}  
+                <td align="center" class="item0" {% if loop.index == o %} style="background-color: lightpink; width: 7%; font-weight: bolder;
+                width: auto;" {% endif %}>{{ ast.혈청 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for ast in ast_list %}
+                <td align="center" class="item1" {% if loop.index == o %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ ast.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>간질환</th>
+                <td {% if o == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if o == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px;">   
+            <tr>
+                <th style="width:auto">SGPT(ALT)</th>
+                {% for alt in alt_list %}  
+                <td align="center" class="item0" {% if loop.index == p %} style="background-color: lightpink; width: 7%; font-weight: bolder;
+                width: auto;" {% endif %}>{{ alt.혈청 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for alt in alt_list %}
+                <td align="center" class="item1" {% if loop.index == p %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ alt.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>간질환</th>
+                <td {% if p == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if p == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-bordered border-dark" style="font-size: 13px;">   
+            <tr>
+                <th style="width:auto">감마GTP</th>
+                {% for gtp in gtp_list %}  
+                <td align="center" class="item0" {% if loop.index == q %} style="background-color: lightpink; width: 7%; font-weight: bolder;
+                width: auto;" {% endif %}>{{ gtp.혈청 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>비율</th>
+                {% for gtp in gtp_list %}
+                <td align="center" class="item1" {% if loop.index == q %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ gtp.비율 }}%</td>
+                {% endfor %}
+            </tr>
+            <tr align="center">
+                <th>간질환</th>
+                <td {% if q == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+                <td {% if q == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<p><span>uid님의 연령대 평균 AST수치는 <span style="font-weight: bold;">{{ astval }}mg/dL</span>, </span>
+    <span>평균 ALT수치는 <span style="font-weight: bold;">{{ altval }}mg/dL</span>, </span>
+    <span>평균 감마GTP수치는 <span style="font-weight: bold;">{{ gtpval }}mg/dL</span>입니다. </span></p>
+<p><span>uid님은 </span></p>
 
 
 <!-- 재실행버튼 -->

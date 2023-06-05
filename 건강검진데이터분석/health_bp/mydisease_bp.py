@@ -13,8 +13,12 @@ from health_bp.bp_util import ttcdict5, ttcdict6, ttcdict7, ttcdict8,ttcdict9,tt
 from health_bp.bp_util import hgdict_male5, hgdict_male6, hgdict_male7, hgdict_male8,hgdict_male9,hgdict_male10,hgdict_male11,hgdict_male12,hgdict_male13,hgdict_male14,hgdict_male15,hgdict_male16,hgdict_male17,hgdict_male18
 from health_bp.bp_util import hgdict_female5, hgdict_female6, hgdict_female7, hgdict_female8,hgdict_female9,hgdict_female10,hgdict_female11,hgdict_female12,hgdict_female13,hgdict_female14,hgdict_female15,hgdict_female16,hgdict_female17,hgdict_female18
 from health_bp.bp_util import ydbdict5, ydbdict6, ydbdict7, ydbdict8,ydbdict9,ydbdict10,ydbdict11,ydbdict12,ydbdict13,ydbdict14,ydbdict15,ydbdict16,ydbdict17,ydbdict18
-from health_bp.bp_util import hcc5, hcc6, hcc7, hcc8,hcc9,hcc10,hcc11,hcc12,hcc13,hcc14,hcc15,hcc16,hcc17,hcc18
-from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list, male, female, hg_male_list, hg_female_list, ydb_abnormal
+from health_bp.bp_util import ast5, ast6, ast7, ast8,ast9,ast10,ast11,ast12,ast13,ast14,ast15,ast16,ast17,ast18
+from health_bp.bp_util import alt5, alt6, alt7, alt8,alt9,alt10,alt11,alt12,alt13,alt14,alt15,alt16,alt17,alt18
+from health_bp.bp_util import gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_male9,gtp_male10,gtp_male11,gtp_male12,gtp_male13,gtp_male14,gtp_male15,gtp_male16,gtp_male17,gtp_male18
+from health_bp.bp_util import gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18
+from health_bp.bp_util import hcc5, hcc6, hcc7, hcc8,hcc9,hcc10,hcc11,hcc12,hcc13,hcc14,hcc15,hcc16,hcc17,hcc18, ast_aged, alt_aged, gtp_female_aged
+from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list, male, female, hg_male_list, hg_female_list, ydb_abnormal, gtp_male_aged
 health_bp2 = Blueprint('health_bp2', __name__)
 
 def age_gen(a) :
@@ -46,7 +50,7 @@ def disease():
         hg = int(request.values["hg"]) if (request.values["hg"]) != '' else 0
         up = int(request.values["up"]) if (request.values["up"]) != '' else 0
         bc = int(request.values["bc"]) if (request.values["bc"]) != '' else 0
-        gpt = int(request.values["gpt"]) if (request.values["gpt"]) != '' else 0
+        gtp = int(request.values["gpt"]) if (request.values["gpt"]) != '' else 0
         ast = int(request.values["ast"]) if (request.values["ast"]) != '' else 0
         alt = int(request.values["alt"]) if (request.values["alt"]) != '' else 0
         
@@ -94,7 +98,7 @@ def disease():
             else:
                 f = f + 1
         
-        # 고혈압 건강 연령대
+        # 공복혈당 건강 연령대
         g = male[f-1]['연령']
        
         # 트리글리세라이드 컬럼 찾기용
@@ -108,24 +112,24 @@ def disease():
                 h = h + 1
         
         # HDL 컬럼 찾기용
-        i=1
+        hdlc=1
         hdl_1 = [0,  40,  60]
         hdl_2 = [40,  60,  10000]
         for m, n in zip(hdl_1, hdl_2):
             if m <= hdl < n:
                 break
             else:
-                i = i + 1        
+                hdlc = hdlc + 1        
         
         # LDL 컬럼 찾기용
-        j=1
+        ldlc=1
         ldl_1 = [0,  130,  160]
         ldl_2 = [130,  160,  10000]
         for m, n in zip(ldl_1, ldl_2):
             if m <= ldl < n:
                 break
             else:
-                j = j + 1
+                ldlc = ldlc + 1
         
         # 총콜레스테롤 컬럼 찾기용
         k=1
@@ -141,28 +145,54 @@ def disease():
         l=1
         hgdict_male_list = [hgdict_male5, hgdict_male6, hgdict_male7, hgdict_male8,hgdict_male9,hgdict_male10,hgdict_male11,hgdict_male12,hgdict_male13,hgdict_male14,hgdict_male15,hgdict_male16,hgdict_male17,hgdict_male18][b]
         hgdict_female_list = [hgdict_female5, hgdict_female6, hgdict_female7, hgdict_female8,hgdict_female9,hgdict_female10,hgdict_female11,hgdict_female12,hgdict_female13,hgdict_female14,hgdict_female15,hgdict_female16,hgdict_female17,hgdict_female18][b]
+        gtp_male_list = [gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_male9,gtp_male10,gtp_male11,gtp_male12,gtp_male13,gtp_male14,gtp_male15,gtp_male16,gtp_male17,gtp_male18][b]
+        gtp_female_list = [gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18][b]
         if gender == '남성':
             hg_1 = [0,  13,  17.5]
             hg_2 = [13,  17.5,  10000]
             hgval = hg_male_list[b]
+            gtpval = gtp_male_aged[b]
             age_list = male
             hgdict_list = hgdict_male_list
+            gtp_list = gtp_male_list
+            # 혈색소 컬럼찾기용
             for m, n in zip(hg_1, hg_2):
                 if m <= hg < n:
                     break
                 else:
                     l = l + 1
+            # gtp 컬럼 찾기용
+            q=1
+            gtp_1 = [-10,  63]
+            gtp_2 = [63,  10000]
+            for i, j in zip(gtp_1, gtp_2):
+                if i < gtp <= j:
+                    break
+                else:
+                    q = q + 1
         elif gender == '여성':
             hg_female_1 = [0,  12,  15.5]
             hg_female_2 = [12,  15.5,  10000]
+            gtpval = gtp_female_aged[b]
             hgval = hg_female_list[b]
             age_list = female
             hgdict_list = hgdict_female_list
+            gtp_list = gtp_female_list
+            # 혈색소 컬럼찾기용
             for m, n in zip(hg_female_1, hg_female_2):
                 if m <= hg < n:
                     break
                 else:
-                    l = l + 1 
+                    l = l + 1
+            # gtp 컬럼 찾기용
+            q=1
+            gtp_1 = [-10,  35]
+            gtp_2 = [35,  10000]
+            for i, j in zip(gtp_1, gtp_2):
+                if i < gtp <= j:
+                    break
+                else:
+                    q = q + 1 
 
         # 요단백 컬럼 찾기용
         m=1
@@ -179,7 +209,25 @@ def disease():
             if i <= bc < j:
                 break
             else:
-                n = n + 1 
+                n = n + 1
+        # AST 컬럼 찾기용
+        o=1
+        ast_1 = [-10,  40]
+        ast_2 = [40,  10000]
+        for i, j in zip(ast_1, ast_2):
+            if i < ast <= j:
+                break
+            else:
+                o = o + 1
+        # ALT 컬럼 찾기용
+        p=1
+        alt_1 = [-10,  40]
+        alt_2 = [40,  10000]
+        for i, j in zip(alt_1, alt_2):
+            if i < alt <= j:
+                break
+            else:
+                p = p + 1   
 
         # 연령대별 수축기/이완기혈압 비율 테이블 찾기
         subp = [su_bp5, su_bp6, su_bp7, su_bp8,su_bp9,su_bp10,su_bp11,su_bp12,su_bp13,su_bp14,su_bp15,su_bp16,su_bp17,su_bp18][b]
@@ -206,6 +254,8 @@ def disease():
         ldldict_list = [ldldict5, ldldict6, ldldict7, ldldict8,ldldict9,ldldict10,ldldict11,ldldict12,ldldict13,ldldict14,ldldict15,ldldict16,ldldict17,ldldict18][b]
         ttcdict_list = [ttcdict5, ttcdict6, ttcdict7, ttcdict8,ttcdict9,ttcdict10,ttcdict11,ttcdict12,ttcdict13,ttcdict14,ttcdict15,ttcdict16,ttcdict17,ttcdict18][b]
         ydbdict_list = [ydbdict5, ydbdict6, ydbdict7, ydbdict8,ydbdict9,ydbdict10,ydbdict11,ydbdict12,ydbdict13,ydbdict14,ydbdict15,ydbdict16,ydbdict17,ydbdict18][b]
+        ast_list = [ast5, ast6, ast7, ast8,ast9,ast10,ast11,ast12,ast13,ast14,ast15,ast16,ast17,ast18][b]
+        alt_list = [alt5, alt6, alt7, alt8,alt9,alt10,alt11,alt12,alt13,alt14,alt15,alt16,alt17,alt18][b]
         hcc_list = [hcc5, hcc6, hcc7, hcc8,hcc9,hcc10,hcc11,hcc12,hcc13,hcc14,hcc15,hcc16,hcc17,hcc18][b]
 
         # 이상지질혈증 유병자 판별
@@ -216,5 +266,7 @@ def disease():
     
         return render_template('my_disease_res.html', age_list = age_list, age=str(age), gender=gender, b=b, scg=scg_bp[b], iwg=iwg_bp[b],
             gha = gha, su_list = subp, iw_list = iwbp, c=c, d=d, e=e, gbhd_list=gbhd, f=f, dnb=dnb, g=g, tgsval=tgsval, hdlval=hdlval, ldlval=ldlval,
-            tdlval=tdlval, ejh = ejh, tgs_list=tgs_list, h=h, i=i, hdldict_list=hdldict_list,ldldict_list=ldldict_list, j=j,k=k, ttcdict_list=ttcdict_list,
-            hgdict_list = hgdict_list, l=l, hgval=hgval, ydbdict = ydbdict_list, m=m, ydb_abnormal = ydb_abnormal[b], hcc_list=hcc_list, n=n)
+            tdlval=tdlval, ejh=ejh, tgs_list=tgs_list, h=h, hdlc=hdlc, hdldict_list=hdldict_list,ldldict_list=ldldict_list, ldlc=ldlc,k=k, ttcdict_list=ttcdict_list,
+            hgdict_list=hgdict_list, l=l, hgval=hgval, ydbdict = ydbdict_list, m=m, ydb_abnormal = ydb_abnormal[b], hcc_list=hcc_list, n=n,
+            astval=ast_aged[b], altval=alt_aged[b], gtpval=gtpval, ast_list = ast_list, o=o, alt_list = alt_list, p=p, gtp_list = gtp_list, q=q,
+            )
