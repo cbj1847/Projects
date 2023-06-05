@@ -269,14 +269,14 @@
             <tr>
                 <th style="width:auto">혈청크레아티닌</th>
                 {% for hcc in hcc_list %}  
-                <td align="center" class="item0" {% if loop.index == m %} style="background-color: lightpink; width: 7%; font-weight: bolder;
+                <td align="center" class="item0" {% if loop.index == n %} style="background-color: lightpink; width: 7%; font-weight: bolder;
                 width: auto;" {% endif %}>{{ hcc.혈청 }}</td>
                 {% endfor %}
             </tr>
             <tr>
                 <th>비율</th>
                 {% for hcc in hcc_list %}
-                <td align="center" class="item1" {% if loop.index == m %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ hcc.비율 }}%</td>
+                <td align="center" class="item1" {% if loop.index == n %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>{{ hcc.비율 }}%</td>
                 {% endfor %}
             </tr>
             <tr align="center">
@@ -289,8 +289,9 @@
     </div>
     <p><span>uid님의 연령대 요단백 비정상률은 <span style="font-weight: bold;">{{ ydb_abnormal }}%</span>입니다.</span></p>
 </div>
+
 <!-- 간질환 요소 -->
- <h5 style="margin-top:30px"><span>AST / ALT / r-GTP수치 분석결과</span></h5>
+<h5 style="margin-top:30px"><span>AST / ALT / r-GTP수치 분석결과</span></h5>
 <div class="row">
     <div class="col">
         <table class="table table-bordered border-dark" style="font-size: 13px;">   
