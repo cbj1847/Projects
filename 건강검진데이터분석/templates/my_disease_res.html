@@ -21,7 +21,7 @@
 <h2>Result.</h2><hr>
 
 <!-- 성별 result -->
-<p><span>성별 : {{ gender }} /&nbsp;</span><span> 나이 : {{ age }}세 / desc. 각 분석결과는 uid님 연령대를 토대로한 결과입니다.</span></p>
+<p><span>성별 : {{ gender }} /&nbsp;</span><span> 나이 : {{ age }}세 / desc. 각 분석결과는 {{ session['uname'] }}님 연령대를 토대로한 결과입니다.</span></p>
 <h5><span>연령대별 데이터 분포</span></h5>
 <table class="table table-bordered border-dark" style="font-size: 13px; margin-top: 15px;">   
     <tr>
@@ -80,7 +80,7 @@
         <td colspan="3" {% if 8<= d <= 10 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
     </tr>
 </table>
-<p><span>uid님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e }}</span> 입니다.</span>
+<p><span>{{ session['uname'] }}님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e }}</span> 입니다.</span>
     <span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
     <span> 평균 이완기 혈압은 <span style="font-weight: bold;">{{ iwg }}mmHg</span> 입니다.</span></p>
 
@@ -106,7 +106,7 @@
         <td {% if f == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
     </tr>
 </table>
-<p><span>uid님 연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며 </span><span>당뇨병 건강연령대는 
+<p><span>{{ session['uname'] }}님 연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며 </span><span>당뇨병 건강연령대는 
     <span style="font-weight: bold;">{{ g }}</span>이고,</span><span style="font-weight: bold;"> 당뇨병 유병자{{ dnb }}</span></p>
 
 <!-- 콜레스테롤 result -->
@@ -130,7 +130,7 @@
             <tr align="center">
                 <th>이상지질혈증</th>
                 <td {% if h == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if h == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if h == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
                 <td {% if h == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
@@ -153,7 +153,7 @@
             <tr align="center">
                 <th>이상지질혈증</th>
                 <td {% if hdlc == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if hdlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if hdlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
                 <td {% if hdlc == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
@@ -178,7 +178,7 @@
             <tr align="center">
                 <th>이상지질혈증</th>
                 <td {% if ldlc == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if ldlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if ldlc == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
                 <td {% if ldlc == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
@@ -201,18 +201,18 @@
             <tr align="center">
                 <th>이상지질혈증</th>
                 <td {% if k == 1 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
-                <td {% if k == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>공복혈당장애</td>
+                <td {% if k == 2 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>전단계</td>
                 <td {% if k == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
             </tr>
         </table>
     </div>
 </div>
-<p><span>uid님의 연령대 HDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ hdlval }}mg/dL</span>, </span>
+<p><span>{{ session['uname'] }}님의 연령대 HDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ hdlval }}mg/dL</span>, </span>
     <span>LDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ ldlval }}mg/dL</span>, </span>
     <span>트리글리세라이드 평균수치는 <span style="font-weight: bold;">{{ tgsval }}mg/dL, </span></span>
     </p>
 <p><span>총 콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ tdlval }}mg/dL</span>입니다. </span>
-    <span>uid님은 콜레스테롤 수치상 <span style="font-weight: bold;">이상지질혈증 유병자 {{ ejh }}</span></span></p>
+    <span>{{ session['uname'] }}님은 콜레스테롤 수치상 <span style="font-weight: bold;">이상지질혈증 유병자 {{ ejh }}</span></span></p>
 
 <!-- 혈색소 result -->
 <h5 style="margin-top:30px"><span>혈색소수치 분석결과</span></h5>
@@ -237,7 +237,7 @@
         <td {% if l == 3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>과다</td>
     </tr>
 </table>
-<p><span>uid님의 연령대 혈색소 평균수치는 <span style="font-weight: bold;">{{ hgval }}mg/dL</span>입니다.</span></p>
+<p><span>{{ session['uname'] }}님의 연령대 혈색소 평균수치는 <span style="font-weight: bold;">{{ hgval }}mg/dL</span>입니다.</span></p>
 
 <!-- 요단백 result -->
 <h5 style="margin-top:30px"><span>요단백 / 혈청크레아티닌수치 분석결과</span></h5>
@@ -287,11 +287,11 @@
             </tr>
         </table>
     </div>
-    <p><span>uid님의 연령대 요단백 비정상률은 <span style="font-weight: bold;">{{ ydb_abnormal }}%</span>입니다.</span></p>
+    <p><span>{{ session['uname'] }}님의 연령대 요단백 비정상률은 <span style="font-weight: bold;">{{ ydb_abnormal }}%</span>입니다.</span></p>
 </div>
 
 <!-- 간질환 요소 -->
-<h5 style="margin-top:30px"><span>AST / ALT / r-GTP수치 분석결과</span></h5>
+<h5 style="margin-top:20px"><span>AST / ALT / r-GTP수치 분석결과</span></h5>
 <div class="row">
     <div class="col">
         <table class="table table-bordered border-dark" style="font-size: 13px;">   
@@ -360,11 +360,9 @@
         </table>
     </div>
 </div>
-<p><span>uid님의 연령대 평균 AST수치는 <span style="font-weight: bold;">{{ astval }}mg/dL</span>, </span>
+<p><span>{{ session['uname'] }}님의 연령대 평균 AST수치는 <span style="font-weight: bold;">{{ astval }}mg/dL</span>, </span>
     <span>평균 ALT수치는 <span style="font-weight: bold;">{{ altval }}mg/dL</span>, </span>
     <span>평균 감마GTP수치는 <span style="font-weight: bold;">{{ gtpval }}mg/dL</span>입니다. </span></p>
-<p><span>uid님은 </span></p>
-
 
 <!-- 재실행버튼 -->
 <p style="text-align: end;"><button onclick="location.href='/myhealth/disease'">재실행</button></p>

@@ -17,7 +17,7 @@
 <div style="padding-left:21%; padding-right:21%">
 <h2 style="margin-top: 20px; font-weight: bolder;">건강 상태 확인하기</h2><hr>
 <form action="/myhealth/disease" method="post">
-<span>주민번호 뒷자리 첫번째까지 입력 (예시: 9912201) : </span><input type="text" name="jm" style="height:80%"><br><hr>
+<span style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></span>
 <div class="row">
     <div class="col">
         <span>수축기혈압 : <input type="text" name="bp1"> mmHg</span>

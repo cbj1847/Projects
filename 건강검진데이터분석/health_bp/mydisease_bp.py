@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, session, redirect, flash
 import numpy as np
 import pandas as pd
 import math
-import hashlib, base64, json
+import db_sqlite.user_dao as udao
 from health_bp.bp_util import su_bp5, su_bp6, su_bp7, su_bp8,su_bp9,su_bp10,su_bp11,su_bp12,su_bp13,su_bp14,su_bp15,su_bp16,su_bp17,su_bp18
 from health_bp.bp_util import iw_bp5, iw_bp6, iw_bp7, iw_bp8,iw_bp9,iw_bp10,iw_bp11,iw_bp12,iw_bp13,iw_bp14,iw_bp15,iw_bp16,iw_bp17,iw_bp18
 from health_bp.bp_util import gbhd5, gbhd6, gbhd7, gbhd8,gbhd9,gbhd10,gbhd11,gbhd12,gbhd13,gbhd14,gbhd15,gbhd16,gbhd17,gbhd18
@@ -19,19 +19,8 @@ from health_bp.bp_util import gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_mal
 from health_bp.bp_util import gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18
 from health_bp.bp_util import hcc5, hcc6, hcc7, hcc8,hcc9,hcc10,hcc11,hcc12,hcc13,hcc14,hcc15,hcc16,hcc17,hcc18, ast_aged, alt_aged, gtp_female_aged
 from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list, male, female, hg_male_list, hg_female_list, ydb_abnormal, gtp_male_aged
-health_bp2 = Blueprint('health_bp2', __name__)
 
-def age_gen(a) :
-    age_12 = 123 - int(str(a)[:2])
-    age_34 = 23 - int(str(a)[:2])
-    if str(a)[-1] == '1':
-        return '남성', age_12
-    elif str(a)[-1] == '2':
-        return '여성', age_12
-    elif str(a)[-1] == '3':
-        return '남성', age_34
-    else:
-        return '여성', age_34
+health_bp2 = Blueprint('health_bp2', __name__)
 
 # 연령대/성별 비율 출력 
 @health_bp2.route('/disease', methods=['GET', 'POST'])
@@ -40,7 +29,7 @@ def disease():
         return render_template('my_disease.html',)
     else:
         # 웹에서 입력받은 값 요청 / 사용자가 입력안할시 0으로 출력
-        jm = int(request.values["jm"]) if (request.values["jm"]) != '' else 0
+        uid = request.values["uid"]
         bp1 = int(request.values["bp1"]) if (request.values["bp1"]) != '' else 0
         bp2 = int(request.values["bp2"]) if (request.values["bp2"]) != '' else 0
         bs = int(request.values["bs"]) if (request.values["bs"]) != '' else 0
@@ -53,11 +42,10 @@ def disease():
         gtp = int(request.values["gpt"]) if (request.values["gpt"]) != '' else 0
         ast = int(request.values["ast"]) if (request.values["ast"]) != '' else 0
         alt = int(request.values["alt"]) if (request.values["alt"]) != '' else 0
-        
+        user_info = udao.get_user(uid)
         # 입력받은 주민번호 토대로 성별/나이 판별
-        gender = age_gen(jm)[0]
-        age = age_gen(jm)[1]
-
+        gender = '남성 'if user_info[5] == 1 else '여성'
+        age = user_info[4]
         # 사용자의 연령대에 해당하는 컬럼을 찾기 위한 판별식
         b=1
         for i, j in zip(np.arange(20, 100, 5), np.arange(24, 104, 5)):
@@ -65,7 +53,10 @@ def disease():
                 break
             else:
                 b = b + 1
-        
+        hgdict_male_list = [hgdict_male5, hgdict_male6, hgdict_male7, hgdict_male8,hgdict_male9,hgdict_male10,hgdict_male11,hgdict_male12,hgdict_male13,hgdict_male14,hgdict_male15,hgdict_male16,hgdict_male17,hgdict_male18][b]
+        hgdict_female_list = [hgdict_female5, hgdict_female6, hgdict_female7, hgdict_female8,hgdict_female9,hgdict_female10,hgdict_female11,hgdict_female12,hgdict_female13,hgdict_female14,hgdict_female15,hgdict_female16,hgdict_female17,hgdict_female18][b]
+        gtp_male_list = [gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_male9,gtp_male10,gtp_male11,gtp_male12,gtp_male13,gtp_male14,gtp_male15,gtp_male16,gtp_male17,gtp_male18][b]
+        gtp_female_list = [gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18][b]
         # 사용자의 혈압에 해당하는 컬럼을 찾기 위한 판별식
         sc_range1 = [0, 110, 115, 120, 125, 130, 135, 140, 145, 150]
         sc_range2 = [110, 115, 120, 125, 130, 135, 140, 145, 150, 1000]
@@ -140,21 +131,16 @@ def disease():
                 break
             else:
                 k = k + 1
-        
+        age_list = male if gender == '남성' else female
+        hgdict_list = hgdict_male_list if gender == '남성' else hgdict_female_list
+        hgval = hg_male_list[b] if gender == '남성' else hg_female_list[b]
+        gtpval = gtp_male_aged[b] if gender == '남성' else gtp_female_aged[b]
+        gtp_list = gtp_male_list if gender == '남성' else gtp_female_list
         # 성별 갈리는거 판별용
         l=1
-        hgdict_male_list = [hgdict_male5, hgdict_male6, hgdict_male7, hgdict_male8,hgdict_male9,hgdict_male10,hgdict_male11,hgdict_male12,hgdict_male13,hgdict_male14,hgdict_male15,hgdict_male16,hgdict_male17,hgdict_male18][b]
-        hgdict_female_list = [hgdict_female5, hgdict_female6, hgdict_female7, hgdict_female8,hgdict_female9,hgdict_female10,hgdict_female11,hgdict_female12,hgdict_female13,hgdict_female14,hgdict_female15,hgdict_female16,hgdict_female17,hgdict_female18][b]
-        gtp_male_list = [gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_male9,gtp_male10,gtp_male11,gtp_male12,gtp_male13,gtp_male14,gtp_male15,gtp_male16,gtp_male17,gtp_male18][b]
-        gtp_female_list = [gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18][b]
         if gender == '남성':
             hg_1 = [0,  13,  17.5]
             hg_2 = [13,  17.5,  10000]
-            hgval = hg_male_list[b]
-            gtpval = gtp_male_aged[b]
-            age_list = male
-            hgdict_list = hgdict_male_list
-            gtp_list = gtp_male_list
             # 혈색소 컬럼찾기용
             for m, n in zip(hg_1, hg_2):
                 if m <= hg < n:
@@ -170,14 +156,9 @@ def disease():
                     break
                 else:
                     q = q + 1
-        elif gender == '여성':
+        else:
             hg_female_1 = [0,  12,  15.5]
             hg_female_2 = [12,  15.5,  10000]
-            gtpval = gtp_female_aged[b]
-            hgval = hg_female_list[b]
-            age_list = female
-            hgdict_list = hgdict_female_list
-            gtp_list = gtp_female_list
             # 혈색소 컬럼찾기용
             for m, n in zip(hg_female_1, hg_female_2):
                 if m <= hg < n:

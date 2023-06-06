@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect
 from weather_util import get_weather
-from user import user_bp
+from user_bp.user import user_bp
 from schedule import schdedule_bp
 from health_bp.mybody_bp import health_bp1
 from health_bp.mydisease_bp import health_bp2
+import os
 import numpy as np
 import pandas as pd
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(schdedule_bp, url_prefix='/schedule')

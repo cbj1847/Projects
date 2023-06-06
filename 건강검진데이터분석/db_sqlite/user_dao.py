@@ -1,7 +1,7 @@
 import sqlite3
 
 def get_user(uid):
-    conn = sqlite3.connect('./db_sqlite/project.db')
+    conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
     sql = 'select * from user where uid=?'
@@ -13,10 +13,10 @@ def get_user(uid):
     return row
 
 def insert_user(params):
-    conn = sqlite3.connect('./db_sqlite/project.db')
+    conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
-    sql = 'insert into user values(?, ?, ?, ?)'
+    sql = 'insert into user values (?, ?, ?, ?, ?, ?)'
     cur.execute(sql, params)
     conn.commit()
 
@@ -24,7 +24,7 @@ def insert_user(params):
     conn.close()
 
 def get_user_list():
-    conn = sqlite3.connect('./db_sqlite/project.db')
+    conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
     sql = 'select * from user'
@@ -36,7 +36,7 @@ def get_user_list():
     return rows
 
 def update_user(params):
-    conn = sqlite3.connect('./db_sqlite/project.db')
+    conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
     sql = 'update user set pwd=?, uname=?, email=? where uid=?'
@@ -47,7 +47,7 @@ def update_user(params):
     conn.close()
 
 def delete_user(uid):
-    conn = sqlite3.connect('./db_sqlite/project.db')
+    conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
     sql = 'delete from user where uid=?'
