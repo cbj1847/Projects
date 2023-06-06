@@ -1,5 +1,6 @@
 # CK Kim add
 dataset/
+*.db
 openweather.txt
 password.txt
 test.py
