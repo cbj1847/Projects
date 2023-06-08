@@ -27,10 +27,11 @@
 </head>
 
 <body>
+<div>
     <!-- 상단 네비게이션바 -->
     <nav class="navbar navbar-expand-sm border-bottom">
         <div class="container-fluid" id="topbanner">
-            <a class="navbar-brand" href="/" style="margin-left:60px"><img src="{{url_for('static', filename='img/로고.png')}}" height="100" width="120"></a>
+            <a class="navbar-brand" href="/" style="margin-left:60px"><img src="{{url_for('static', filename='img/로고.png')}}" height="70" width="84"></a>
             <ul class="navbar-nav"> 
                 <span class="nav-bar me-3 align-self-center" style="color:rgb(0, 0, 0); font-size: 17px;">
 					{% if session['uid'] %}
@@ -50,7 +51,7 @@
                 <div class="left side-menu">
                     <div class="sidebar-inner">
                         <div id="sidebar-menu">
-                            <ul style="margin-top: 100px;">
+                            <ul style="margin-top: 70px;">
                                 <li class="has_sub1"><a href="javascript:void(0);" class="waves-effect">
                                     <i class="fas fa-bars" style="color:brown;"></i>
                                 </a></li>
@@ -130,7 +131,8 @@
                         </ul>
                     </div>
                 </div>
-            </div> 
+                <div class="overlay" style="display:none"></div> 
+            </div>
     </header>
     <!-- 메인 영역 -->
     <div class="container" id="maincontainer">
@@ -144,6 +146,7 @@
             {% endif %}
         {% endwith %}
     </div>
+</div>
 </body>
 
 </html>
