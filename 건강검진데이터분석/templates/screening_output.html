@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+{% block additional_head %}
+<style>
+    th {
+        text-align: center;
+    }
+    button {
+        border-radius: 7%;
+    }
+    input {
+        width:10%; height: 80%;
+    }
+</style>
+{% endblock %}
+{% block main %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <script>
+        alert("{{ messages[-1] }}")
+    </script>
+{% endif %}
+{% endwith %}
+<div style="padding-left:2%; padding-right:2%">
+    <form action="/screening/output" method="post">
+    <h2 style="margin-top: 20px; font-weight: bolder;">이전 건강검진 결과</h2><hr>
+    <p style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></p>
+    <span style="font-size: 25px;">저장된 데이터&nbsp;&nbsp;<button type="submit" style="font-size: 20px;">불러오기</button></span>
+    <table class="table table-bordered border-dark" style="font-size: 13px; margin-top: 15px;">   
+        <tr style="width:auto">
+            <th>저장일자</th><th>수축기혈압</th><th>이완기혈압</th><th>공복혈당</th>
+            <th>트리글리세라이드</th><th>HDL콜레스테롤</th><th>LDL콜레스테롤</th><th>총콜레스테롤</th>
+            <th>혈색소</th><th>요단백</th><th>혈청크레아티닌</th><th>AST</th>
+            <th>ALT</th><th>r-GTP</th><th>흡연여부</th><th>음주여부</th>
+        </tr>
+        {% for scr in scr_list %}  
+        <tr>
+            {% for data in scr[1:] %}
+                <td>{{ data }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    </form>    
+</div>
+{% endblock %}

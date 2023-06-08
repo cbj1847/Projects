@@ -4,6 +4,12 @@ from user_bp.user import user_bp
 from schedule import schdedule_bp
 from health_bp.mybody_bp import health_bp1
 from health_bp.mydisease_bp import health_bp2
+from hscs_bp.body_bp import hscs_body
+from hscs_bp.dspr_bp import hscs_dspr
+from hscs_bp.analysis_bp import dspr_analysis
+from my_util.crawling import news
+from screening_bp.screening_input import screening_input
+from screening_bp.screening_output import screening_output
 import os
 import numpy as np
 import pandas as pd
@@ -15,26 +21,25 @@ app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(schdedule_bp, url_prefix='/schedule')
 app.register_blueprint(health_bp1, url_prefix='/myhealth')
 app.register_blueprint(health_bp2, url_prefix='/myhealth')
+app.register_blueprint(screening_input, url_prefix='/screening')
+app.register_blueprint(screening_output, url_prefix='/screening')
+app.register_blueprint(hscs_body, url_prefix='/hscs')
+app.register_blueprint(hscs_dspr, url_prefix='/hscs')
+app.register_blueprint(dspr_analysis, url_prefix='/analysis')
 
-def age_gen(a) :
-    age_12 = 123 - int(str(a)[:2])
-    age_34 = 23 - int(str(a)[:2])
-    if str(a)[-1] == '1':
-        return '남성', age_12
-    elif str(a)[-1] == '2':
-        return '여성', age_12
-    elif str(a)[-1] == '3':
-        return '남성', age_34
-    else:
-        return '여성', age_34
-    
+# for AJAX ######################################################
+@app.before_first_request
+def before_first_request():
+    global news_list
+    news_list = news()
+
 @app.route('/')
 def home():
-    return render_template('home.html', weather=get_weather(app))
+    return render_template('home.html', weather=get_weather(app), news_list = news_list)
 
-@app.route('/diary')
+@app.route('/home')
 def diary():
-    return render_template('diary.html', weather=get_weather(app))
+    return render_template('home.html', weather=get_weather(app), news = news())
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

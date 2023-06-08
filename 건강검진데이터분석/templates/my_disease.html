@@ -17,7 +17,8 @@
 <div style="padding-left:21%; padding-right:21%">
 <h2 style="margin-top: 20px; font-weight: bolder;">건강 상태 확인하기</h2><hr>
 <form action="/myhealth/disease" method="post">
-<span style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></span>
+<p style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></p>
+<p style="display:none"><input type="text" name="save" style="height:80%" value=""></p>
 <div class="row">
     <div class="col">
         <span>수축기혈압 : <input type="text" name="bp1"> mmHg</span>
@@ -55,7 +56,7 @@
         <span>혈청크레아티닌 수치 : <input type="text" name="bc"> IU/dL</span>
     </div>
     <div class="col">
-        <span>감마GPT 수치 : <input type="text" name="gpt"> IU/dL</span>
+        <span>감마GPT 수치 : <input type="text" name="gtp"> IU/dL</span>
     </div>
 </div><hr>
 <div class="row">

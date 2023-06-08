@@ -17,6 +17,13 @@
 {% endblock %}
 
 {% block main %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <script>
+        alert("{{ messages[-1] }}")
+    </script>
+{% endif %}
+{% endwith %}
 <div style=" padding-left:7%; padding-right:7%; margin-top: 10px;">
 <h2>Result.</h2><hr>
 
@@ -363,8 +370,30 @@
 <p><span>{{ session['uname'] }}님의 연령대 평균 AST수치는 <span style="font-weight: bold;">{{ astval }}mg/dL</span>, </span>
     <span>평균 ALT수치는 <span style="font-weight: bold;">{{ altval }}mg/dL</span>, </span>
     <span>평균 감마GTP수치는 <span style="font-weight: bold;">{{ gtpval }}mg/dL</span>입니다. </span></p>
+<!-- 대상자 건강 상태 -->
+<h5 style="margin-top:20px"><span>종합건강상태</span></h5>
+<h7>desc. 종합건강상태는 위 분석 결과를 기반으로 하여 종합한 결과입니다.</h7>
+<table class="table table-bordered border-dark" style="font-size: 13px; margin-top: 15px;">   
+    <tr align="center">
+        <th>종합점수</th>
+        <td {% if r <= 5 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>정상</td>
+        <td {% if 6 <= r <= 11 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>경고</td>
+        <td {% if 12 <= r <= 17 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>위험</td>
+        <td {% if 18 <= r  %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>매우 위험</td>
+    </tr>
+</table>
 
-<!-- 재실행버튼 -->
-<p style="text-align: end;"><button onclick="location.href='/myhealth/disease'">재실행</button></p>
+<!-- 재실행/저장버튼 -->
+<form action="/myhealth/disease" method="post">
+<p style="text-align: end;"><button type="submit">저장</button>
+    <button onclick="location.href='/myhealth/disease'" style="margin-left:10px">재실행</button>
+    <span style="display: none;"><input name="bp1" value="{{bp1}}"><input name="bp2" value="{{bp2}}"><input name="bs" value="{{bs}}">
+        <input name="tg" value="{{tg}}"><input name="hdl" value="{{hdl}}"><input name="ldl" value="{{ldl}}"><input name="tdl" value="{{tdl}}">
+        <input name="hg" value="{{hg}}"><input name="up" value="{{up}}"><input name="bc" value="{{bc}}"><input name="ast" value="{{ast}}">
+        <input name="alt" value="{{alt}}"><input name="gtp" value="{{gtp}}"><input name="smoke" value="{{smoke}}"><input name="drink" value="{{drink}}">
+        <input name="save" value="save"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}">
+    </span></span>
+</p>
+</form>
 </div>
 {% endblock %}
