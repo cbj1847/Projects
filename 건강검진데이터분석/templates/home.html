@@ -3,12 +3,17 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/autofill/2.5.3/js/dataTables.autoFill.min.js"></script>
+<style>
+    th, td {
+        vertical-align:middle;
+    }
+</style>
 {% endblock %}
 {% block main %}
 <div style="padding-bottom: 10%;">
 <h3 style="margin-top:10px;"><i class="fa-solid fa-bullhorn"></i> &nbsp;건강 뉴스</h3><br>
-    <table id="example"  class="table">
-        <thead >
+    <table id="example" class="table">
+        <thead>
             <tr>
                 <th>index</th>
                 <th>이미지</th>

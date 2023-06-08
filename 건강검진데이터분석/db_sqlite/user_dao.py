@@ -39,7 +39,7 @@ def insert_disease(params):
     conn = sqlite3.connect('C:/Workspace/Projects/건강검진데이터분석/db_sqlite/project.db')
     cur = conn.cursor()
 
-    sql = 'insert into disease values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    sql = 'insert into disease values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     cur.execute(sql, params)
     conn.commit()
 

@@ -35,6 +35,7 @@ def logout():
     session.pop('uname', None)
     session.pop('year', None)
     session.pop('month', None)
+    flash('로그아웃 되었습니다.')
     return redirect('/')
 
 @user_bp.route('/register', methods=['GET','POST'])

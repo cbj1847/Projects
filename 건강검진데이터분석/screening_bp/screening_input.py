@@ -13,6 +13,10 @@ def scr_input():
             now = datetime.datetime.now()
             uid = request.values["uid"]
             date = int(f'{now.year}{now.month:02d}{now.day:02d}')
+            weight = int(request.values["weight"]) if (request.values["weight"]) != '' else 1
+            waist = int(request.values["waist"]) if (request.values["waist"]) != '' else 0
+            eye_l = float(request.values["eye_left"]) if (request.values["eye_left"]) != '' else 0
+            eye_R = float(request.values["eye_right"]) if (request.values["eye_right"]) != '' else 0
             bp1 = float(request.values["bp1"]) if (request.values["bp1"]) != '' else 0
             bp2 = float(request.values["bp2"]) if (request.values["bp2"]) != '' else 0
             bs = float(request.values["bs"]) if (request.values["bs"]) != '' else 0
@@ -27,7 +31,7 @@ def scr_input():
             gtp = float(request.values["gpt"]) if (request.values["gpt"]) != '' else 0
             smk = request.values["smoke"]
             drk = request.values["drink"]
-            udao.insert_disease((uid, date, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp, smk, drk))
+            udao.insert_disease((uid, weight, waist, eye_l, eye_R, date, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp, smk, drk))
             
             flash('저장되었습니다.')
             return redirect('/')

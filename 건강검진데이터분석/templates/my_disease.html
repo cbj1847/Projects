@@ -14,11 +14,58 @@
 {% endblock %}
 
 {% block main %}
-<div style="padding-left:21%; padding-right:21%">
+<div style="padding-left:17%; padding-right:17%">
 <h2 style="margin-top: 20px; font-weight: bolder;">건강 상태 확인하기</h2><hr>
 <form action="/myhealth/disease" method="post">
 <p style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></p>
 <p style="display:none"><input type="text" name="save" style="height:80%" value=""></p>
+<div class="row">
+    <div class="col">
+        <span>신장 : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="height" style="width:15%"> cm</span>
+    </div>
+    <div class="col">
+        <span>체중 : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="weight" style="width:15%"> kg</span>
+    </div>
+    <div class="col">
+        <span>허리둘레 : <input type="text" name="waist" style="width:13%"> cm</span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">
+        <span>시력(좌) : <input type="text" name="eye_left"></span>
+    </div>
+    <div class="col">
+        <span>시력(우) : <input type="text" name="eye_right"></span>
+    </div>
+</div><hr>
+<div class="row">
+    <div class="col">청력(좌) : </div>
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sound_L" id="ex_rd" value="좌정상">
+            <label class="form-check-label" for="smoker">정상</label>
+        </div>
+        </div>
+        <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sound_L" id="ex_rd" value="좌비정상" checked>
+            <label class="form-check-label" for="nonsmoker">비정상</label>
+        </div>
+     </div>
+     <div class="col">청력(우) : </div>
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sound_R" id="ex_rd" value="우정상">
+            <label class="form-check-label" for="smoker">정상</label>
+        </div>
+        </div>
+        <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="sound_R" id="ex_rd" value="우비정상" checked>
+            <label class="form-check-label" for="nonsmoker">비정상</label>
+        </div>
+     </div>
+</div><hr>
 <div class="row">
     <div class="col">
         <span>수축기혈압 : <input type="text" name="bp1"> mmHg</span>
