@@ -1,13 +1,14 @@
 from flask import Blueprint, request, render_template, session, redirect, flash
+from weather_util import get_weather
 import db_sqlite.user_dao as udao
 import datetime
 
-screening_input = Blueprint('screening_input', __name__)
+screening_input = Blueprint('screening_input', __name__, static_folder='../static')
 
 @screening_input.route('/input', methods=['GET', 'POST'])
 def scr_input():
     if request.method == 'GET':
-        return render_template('screening_input.html')
+        return render_template('screening_input.html', weather=get_weather(screening_input))
     else:
         if request.values["uid"]:
             now = datetime.datetime.now()
@@ -29,9 +30,8 @@ def scr_input():
             ast = float(request.values["ast"]) if (request.values["ast"]) != '' else 0
             alt = float(request.values["alt"]) if (request.values["alt"]) != '' else 0
             gtp = float(request.values["gpt"]) if (request.values["gpt"]) != '' else 0
-            smk = request.values["smoke"]
-            drk = request.values["drink"]
-            udao.insert_disease((uid, weight, waist, eye_l, eye_R, date, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp, smk, drk))
+
+            udao.insert_disease((uid, date, weight, waist, eye_l, eye_R, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp))
             
             flash('저장되었습니다.')
             return redirect('/')

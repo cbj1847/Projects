@@ -12,16 +12,16 @@
         <form action="/screening/output" method="post">
             <p><h2 style="margin-top: 20px; font-weight: bolder;">이전 건강검진 결과</h2></p><hr>
             <p style="display:none"><input type="text" name="uid" style="height:80%" value="{{ session['uid'] }}"></p>
-            <span><button type="submit" style="font-size: 17px;">데이터 불러오기</button>
-                <div class="dropdown" style="text-align: end;">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                      보기방식
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <li><a class="dropdown-item" onclick="showGraph()">그래프</a></li>
-                      <li><a class="dropdown-item" onclick="showTable()">표</a></li>
-                    </ul>
-                  </div></span>
+            
+            <div class="dropdown" style="text-align: end;">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                  보기방식
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <li><a class="dropdown-item" onclick="showGraph()" href="#" type="submit">그래프</a></li>
+                  <li><a class="dropdown-item" onclick="showTable()" href="#">표</a></li>
+                </ul>
+              </div></span>
 
                   <div id="graph">
                     <canvas id="myChart"></canvas>

@@ -87,9 +87,8 @@
         </tr>
     </table>
     <p>연령대 평균 체중은 {{avg_weight}}kg 입니다.</p>
-    <p>당신의 체질량지수는 {{bmi}} 입니다</p>
-    <p>연령대 평균 체질량지수는 {{avg_BMI}} 입니다.</p>
-    <p>당신의 체질량지수는 {{bmi_category}} 입니다.</p>
+    <p>{{ session['uname'] }}님의 체질량지수는 {{bmi}}이고, 연령대 평균 체질량지수는 {{avg_BMI}} 입니다.</p>
+    <p>{{ session['uname'] }}님의 체질량지수는 {{bmi_category}} 입니다.</p>
     <h5 style="margin-top:30px"><span>BMI데이터 분포</span></h5>
     <table class="table table-bordered border-dark" style="font-size: 11px;">
         <tr>
@@ -125,8 +124,7 @@
             {% endfor %}
         </tr>
     </table>
-    <p>연령대 평균 허리둘레는 {{avg_waist}}cm 입니다</p>
-    <p>당신은 복부비만{{waist_division}}</p>
+    <p>연령대 평균 허리둘레는 {{avg_waist}}cm 이고, {{ session['uname'] }}님은 복부비만{{waist_division}}</p>
 
     <h5 style="margin-top:30px"><span>연령대별 시력데이터 분포</span></h5>
     <table class="table table-bordered border-dark" style="font-size: 11px;">
@@ -146,7 +144,7 @@
             {% endfor %}
         </tr>
     </table>
-    <p>연령대 평균 시력(좌){{avg_eye_left}}은 입니다.</p>
+    <p>연령대 평균 시력(좌)는 {{avg_eye_left}} 입니다.</p>
 
     <table class="table table-bordered border-dark" style="font-size: 11px;">
         <tr>
@@ -165,7 +163,7 @@
             {% endfor %}
         </tr>
     </table>
-    <p>연령대 평균 시력(우){{avg_eye_right}}은 입니다.</p>
+    <p>연령대 평균 시력(우)는 {{avg_eye_right}}입니다.</p>
 
     <h5 style="margin-top:30px"><span>연령대별 청력데이터 분포</span></h5>
     <table class="table table-bordered border-dark" style="font-size: 11px;">
@@ -256,10 +254,8 @@
             </td>
         </tr>
     </table>
-    <p><span>{{ session['uname'] }}님은 고혈압 유병자{{gha}} </span><span>고혈압 건강 연령대는 <span style="font-weight: bold;">{{ e
-                }}</span> 입니다.</span>
-        <span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
-        <span> 평균 이완기 혈압은 <span style="font-weight: bold;">{{ iwg }}mmHg</span> 입니다.</span>
+    <p><span>연령대 평균 수축기 혈압은 <span style="font-weight: bold;">{{ scg }}mmHg</span> 이고,</span>
+        <span>평균 이완기 혈압은 <span style="font-weight: bold;">{{ iwg }}mmHg</span> 입니다.</span>
     </p>
 
     <!-- 공복혈당 result -->
@@ -286,10 +282,8 @@
             <td {% if f==3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>유병자</td>
         </tr>
     </table>
-    <p><span>{{ session['uname'] }}님 연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며
-        </span><span>당뇨병 건강연령대는
-            <span style="font-weight: bold;">{{ g }}</span>이고,</span><span style="font-weight: bold;"> 당뇨병 유병자{{ dnb
-            }}</span></p>
+    <p><span>연령대 평균 공복혈당은 <span style="font-weight: bold;">{{ scg }}mg/dL</span> 이며,
+        </span></span><span style="font-weight: bold;">{{ session['uname'] }}님은 당뇨병 유병자{{ dnb}}</span></p>
 
     <!-- 콜레스테롤 result -->
     <h5 style="margin-top:30px"><span>콜레스테롤수치 분석결과</span></h5>
@@ -394,7 +388,7 @@
             </table>
         </div>
     </div>
-    <p><span>{{ session['uname'] }}님의 연령대 HDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ hdlval }}mg/dL</span>,
+    <p><span>연령대 HDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ hdlval }}mg/dL</span>,
         </span>
         <span>LDL콜레스테롤 평균수치는 <span style="font-weight: bold;">{{ ldlval }}mg/dL</span>, </span>
         <span>트리글리세라이드 평균수치는 <span style="font-weight: bold;">{{ tgsval }}mg/dL, </span></span>
@@ -427,7 +421,7 @@
             <td {% if l==3 %} style="background-color: lightpink; font-weight: bolder;" {% endif %}>과다</td>
         </tr>
     </table>
-    <p><span>{{ session['uname'] }}님의 연령대 혈색소 평균수치는 <span style="font-weight: bold;">{{ hgval }}mg/dL</span>입니다.</span>
+    <p><span>연령대 평균 혈색소수치는 <span style="font-weight: bold;">{{ hgval }}mg/dL</span>입니다.</span>
     </p>
 
     <!-- 요단백 result -->

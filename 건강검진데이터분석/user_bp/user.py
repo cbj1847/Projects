@@ -1,14 +1,15 @@
 from flask import Blueprint, request, render_template, session, current_app
 from flask import redirect, flash
+from weather_util import get_weather
 import hashlib, base64, json, os
 import db_sqlite.user_dao as udao
 
-user_bp = Blueprint('user_bp', __name__)
+user_bp = Blueprint('user_bp', __name__, static_folder='../static')
 
 @user_bp.route('/login', methods=['GET','POST'])    # localhost:5000/user/login 이 처리되는 곳
 def login():
     if request.method == 'GET':
-        return render_template('user/login.html')
+        return render_template('user/login.html', weather=get_weather(user_bp))
     else:
         uid = request.form['uid']
         pwd = request.form['pwd']
@@ -41,7 +42,7 @@ def logout():
 @user_bp.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'GET':
-        return render_template('user/register.html')
+        return render_template('user/register.html', weather=get_weather(user_bp))
     else:
         uid = request.form['uid']
         if udao.get_user(uid):
@@ -66,13 +67,13 @@ def register():
 @user_bp.route('/list')
 def list():
     user_list = udao.get_user_list()
-    return render_template('user/list.html', user_list=user_list)
+    return render_template('user/list.html', user_list=user_list, weather=get_weather(user_bp))
 
 @user_bp.route('/update/<uid>', methods=['GET','POST'])
 def update(uid):
     user = udao.get_user(uid)
     if request.method == 'GET':
-        return render_template('user/update.html', user=user)
+        return render_template('user/update.html', user=user, weather=get_weather(user_bp))
     else:
         pwd = request.form['pwd']
         pwd2 = request.form['pwd2']
@@ -88,7 +89,7 @@ def update(uid):
 
 @user_bp.route('/delete/<uid>')
 def delete(uid):
-    return render_template('user/delete.html', uid=uid)
+    return render_template('user/delete.html', uid=uid, weather=get_weather(user_bp))
 
 @user_bp.route('/delete_confirm/<uid>')
 def delete_confirm(uid):

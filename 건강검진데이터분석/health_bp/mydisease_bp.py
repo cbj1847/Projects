@@ -20,6 +20,7 @@ from health_bp.bp_util import gtp_male5, gtp_male6, gtp_male7, gtp_male8,gtp_mal
 from health_bp.bp_util import gtp_female5, gtp_female6, gtp_female7, gtp_female8,gtp_female9,gtp_female10,gtp_female11,gtp_female12,gtp_female13,gtp_female14,gtp_female15,gtp_female16,gtp_female17,gtp_female18
 from health_bp.bp_util import hcc5, hcc6, hcc7, hcc8,hcc9,hcc10,hcc11,hcc12,hcc13,hcc14,hcc15,hcc16,hcc17,hcc18, ast_aged, alt_aged, gtp_female_aged
 from health_bp.bp_util import tg_list, hdl_list, ldl_list, tdl_list, male, female, hg_male_list, hg_female_list, ydb_abnormal, gtp_male_aged
+from weather_util import get_weather
 
 M_height = [{'신장': 145, '비율': 0.03},{'신장': 150, '비율': 0.58},{'신장': 155, '비율': 3.66},{'신장': 160, '비율': 13.2},
         {'신장': 165, '비율': 25.56},{'신장': 170, '비율': 29.86},{'신장': 175, '비율': 18.79},{'신장': 180, '비율': 6.97},
@@ -97,12 +98,12 @@ sound_right_avg=[{'나이': '20~24세', '비정상 청력 비율': 0.22},{'나�
 
 M_W_BMI =[{'BMI': '18.미만\n저체중', '비율': 4.42},{'BMI': '18.5-24.0\n 정상', '비율': 48.73},{'BMI': '25.0-30.0\n정상', '비율': 42.37},{'BMI': '30이상\n 비만', '비율': 4.49}]
 
-health_bp2 = Blueprint('health_bp2', __name__)
+health_bp2 = Blueprint('health_bp2', __name__, static_folder='../static')
 # 연령대/성별 비율 출력 
 @health_bp2.route('/disease', methods=['GET', 'POST'])
 def disease():
     if request.method == 'GET':
-        return render_template('my_disease.html',)
+        return render_template('my_disease.html', weather=get_weather(health_bp2))
     else:
         if request.values["uid"]:
             now = datetime.datetime.now()
@@ -171,7 +172,7 @@ def disease():
                     bmi_category = "비만" 
             else:
                 for item_height, item_bmi,item_weight,item_waist,item_eye_left,item_eye_right,item_sound_left,item_sound_right in zip(W_height_avg, W_BMI_avg,W_weight_avg,W_waist_avg,eye_left_avg,eye_right_avg,sound_left_avg,sound_right_avg):
-                    if item_height['나이'] == f"{i}~{j}세":
+                    if item_height['나이'] == f"{age_find1}~{age_find2}세":
                         avg_height = item_height['평균키']
                         avg_BMI = item_bmi['평균체질량']
                         avg_weight =item_weight['평균 체중']
@@ -486,7 +487,7 @@ def disease():
                 ejh = '가 아닙니다.'
 
             if request.values['save']:
-                udao.insert_disease((uid, date, weight, waist, eye_l, eye_R, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp, smk, drk))
+                udao.insert_disease((uid, date, weight, waist, eye_l, eye_R, bp1, bp2, bs, tg, hdl, ldl, ldl+hdl, hg, up, bc, ast, alt, gtp))
                 flash("저장되었습니다.")
                 return redirect('/myhealth/disease')
             else:
@@ -500,7 +501,7 @@ def disease():
                     avg_height=avg_height,avg_BMI=avg_BMI,avg_weight=avg_weight, bmi=bmi,bmi_category=bmi_category,percentile=percentile,bmi_list=M_W_BMI,
                     waist_list=waist_list,waist_division=waist_division,avg_waist=avg_waist,eye_left_list=eye_left,eye_right_list=eye_right,avg_eye_left=avg_eye_left,
                     avg_eye_right=avg_eye_right,sound_left_list=sound_left,sound_right_list=sound_right,avg_sound_left=avg_sound_left,avg_sound_right=avg_sound_right
-                    )
+                    , weather=get_weather(health_bp2))
         else:
             flash('로그인 후 이용해주세요.')
             return redirect('/')

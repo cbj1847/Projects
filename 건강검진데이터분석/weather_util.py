@@ -3,7 +3,6 @@ import folium, json, requests, os
 from urllib.parse import quote
 import pandas as pd
 
-
 def get_weather(app):
     key_file = os.path.join(app.static_folder, 'key/openweather.txt')
     with open(key_file) as f:
