@@ -52,8 +52,7 @@
                         </tr>
                         {% for scr in scr_list %}  
                             <tr>
-                                <td>{{ scr[1] }}</td> <!-- 저장일자를 x좌표로 표시 -->
-                                {% for data in scr[2:] %}
+                                {% for data in scr[1:] %}
                                     <td>{{ data }}</td>
                                 {% endfor %}
                             </tr>

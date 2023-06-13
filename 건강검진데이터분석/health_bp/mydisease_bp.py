@@ -111,9 +111,9 @@ def disease():
             uid = request.values["uid"]
             user_info = udao.get_user(uid)
             date = int(f'{now.year}{now.month:02d}{now.day:02d}')
-            height = int(request.values["height"]) if (request.values["height"]) != '' else 1
-            weight = int(request.values["weight"]) if (request.values["weight"]) != '' else 1
-            waist = int(request.values["waist"]) if (request.values["waist"]) != '' else 0
+            height = float(request.values["height"]) if (request.values["height"]) != '' else 1
+            weight = float(request.values["weight"]) if (request.values["weight"]) != '' else 1
+            waist = float(request.values["waist"]) if (request.values["waist"]) != '' else 0
             eye_l = float(request.values["eye_left"]) if (request.values["eye_left"]) != '' else 0
             eye_R = float(request.values["eye_right"]) if (request.values["eye_right"]) != '' else 0
             sound_L = request.values["sound_L"]
@@ -496,7 +496,8 @@ def disease():
                     tdlval=tdlval, ejh=ejh, tgs_list=tgs_list, h=h, hdlc=hdlc, hdldict_list=hdldict_list,ldldict_list=ldldict_list, ldlc=ldlc,k=k, ttcdict_list=ttcdict_list,
                     hgdict_list=hgdict_list, l=l, hgval=hgval, ydbdict = ydbdict_list, m=m, ydb_abnormal = ydb_abnormal[b], hcc_list=hcc_list, n=n,
                     astval=ast_aged[b], altval=alt_aged[b], gtpval=gtpval, ast_list = ast_list, o=o, alt_list = alt_list, p=p, gtp_list = gtp_list, q=q,
-                    bp1=bp1, bp2=bp2, bs=bs, tg=tg, hdl=hdl, ldl=ldl, tdl=ldl+hdl, hg=hg, up=up, bc=bc, ast=ast, alt=alt, gtp=gtp, smk=smk, drk=drk,
+                    bp1=bp1, bp2=bp2, bs=bs, tg=tg, hdl=hdl, ldl=ldl, tdl=ldl+hdl, hg=hg, up=up, bc=bc, ast=ast, alt=alt, gtp=gtp, smk=smk, drk=drk, weight=weight, waist=waist,
+                    eye_l=eye_l,eye_R=eye_R,
                     total_list = total_list, r=r,height_list=height_list, weight_list=weight_list, c_=c_,d_=d_,x=x,MW=MW,MW_E_L=MW_E_L,MW_E_R=MW_E_R,SL=SL,SR=SR,
                     avg_height=avg_height,avg_BMI=avg_BMI,avg_weight=avg_weight, bmi=bmi,bmi_category=bmi_category,percentile=percentile,bmi_list=M_W_BMI,
                     waist_list=waist_list,waist_division=waist_division,avg_waist=avg_waist,eye_left_list=eye_left,eye_right_list=eye_right,avg_eye_left=avg_eye_left,
